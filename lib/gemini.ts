@@ -32,21 +32,18 @@ export async function summarizeFile(fileContent: string, fileName: string, mimeT
     'models/gemini-2.0-flash-001'  // Stable version
   ]
   
-  const prompt = `You are summarizing a file. IMPORTANT: Base your summary ONLY on the information provided in the file content below. Do not add any external knowledge, assumptions, or information not present in the file.
-
-File name: ${fileName}
-File type: ${mimeType}
-
+  const prompt = `Please provide a comprehensive summary of the following file (${fileName}, type: ${mimeType}). 
+  
 File content:
 ${fileContent}
 
-Please provide a summary based ONLY on the above file content:
-1. A brief overview of what the file contains (based only on the content provided)
-2. Key points or main topics (extracted directly from the file)
-3. Any important details or findings (only from the file content)
-4. Overall summary (strictly based on the information in the file)
+Please provide:
+1. A brief overview of what the file contains
+2. Key points or main topics
+3. Any important details or findings
+4. Overall summary
 
-Do not include any information, facts, or details that are not explicitly stated in the file content above.`
+Format your response in a clear, structured manner.`
 
   let lastError: any = null
   

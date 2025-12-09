@@ -65,41 +65,11 @@ export default function UserPage() {
         throw new Error('Word documents (.docx, .doc) are not supported. Please convert to .txt or .pdf first.')
       }
       
-      // Handle PDF files
-      if (fileName.endsWith('.pdf') || file.file_type === 'application/pdf') {
-        // Convert blob to array buffer, then to File for FormData
-        const arrayBuffer = await fileData.arrayBuffer()
-        const pdfFile = new File([arrayBuffer], file.file_name, { type: 'application/pdf' })
-        
-        // Parse PDF using API route
-        const formData = new FormData()
-        formData.append('file', pdfFile)
-        
-        const parseResponse = await fetch('/api/parse-pdf', {
-          method: 'POST',
-          body: formData,
-        })
-        
-        // Check if response is actually JSON
-        const contentType = parseResponse.headers.get('content-type')
-        if (!contentType || !contentType.includes('application/json')) {
-          const text = await parseResponse.text()
-          console.error('Non-JSON response from PDF parser:', text.substring(0, 200))
-          throw new Error('Server error while parsing PDF. Please try again.')
-        }
-        
-        if (!parseResponse.ok) {
-          const errorData = await parseResponse.json().catch(() => ({ error: 'Failed to parse PDF' }))
-          throw new Error(errorData.error || 'Failed to parse PDF')
-        }
-        
-        const pdfData = await parseResponse.json()
-        fileContent = pdfData.text
-        
-        if (!fileContent || fileContent.trim().length === 0) {
-          throw new Error('PDF appears to be empty or could not extract text. The PDF might be image-based or encrypted.')
-        }
-      } else if (file.file_type.startsWith('text/') || 
+      if (fileName.endsWith('.pdf')) {
+        throw new Error('PDF files are not directly supported for text extraction. Please convert to .txt first, or use a PDF text extraction tool.')
+      }
+      
+      if (file.file_type.startsWith('text/') || 
           file.file_type === 'application/json' ||
           file.file_type === 'application/javascript' ||
           file.file_type === 'application/xml' ||
@@ -126,7 +96,7 @@ export default function UserPage() {
         try {
           fileContent = await fileData.text()
         } catch {
-          throw new Error(`File type "${file.file_type}" is not supported. Please upload a text file (.txt, .md, .js, .py, etc.) or PDF file.`)
+          throw new Error(`File type "${file.file_type}" is not supported. Please upload a text file (.txt, .md, .js, .py, etc.) or convert your file to text format first.`)
         }
       }
 
