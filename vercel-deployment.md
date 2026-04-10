@@ -52,3 +52,6 @@ If you prefer Netlify:
 7. Add environment variables in **Site settings** → **Environment variables**
 8. Deploy!
 
+
+
+

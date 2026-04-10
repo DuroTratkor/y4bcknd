@@ -5,20 +5,14 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-          File Upload & Summarizer
+          Admin Panel
         </h1>
         <div className="space-y-4">
           <Link
-            href="/upload"
-            className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 text-center"
+            href="/admin"
+            className="block w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 text-center"
           >
-            Upload Files
-          </Link>
-          <Link
-            href="/user"
-            className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 text-center"
-          >
-            View & Summarize Files
+            Admin Dashboard
           </Link>
         </div>
       </div>
